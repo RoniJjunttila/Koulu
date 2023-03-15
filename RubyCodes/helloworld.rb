@@ -1,1 +1,0 @@
-puts("Moi maailma!\nTästä se lähtee!")
