@@ -1,0 +1,59 @@
+/* CSS File (e.g., styles.css) */
+
+/* Style for the parent container */
+.gamedots > div {
+    display: flex; /* Make the divs go inline */
+     /* Add some spacing between them */
+  }
+  
+.gamedots {
+  transform: skewX(-15deg);
+    margin-left: 32%;
+}
+
+  /* Style for the buttons */
+  .gamedots button {
+    padding: 4px 6px; /* Increase the button size */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+  
+  /* Style for the FontAwesome icons inside the buttons */
+  .gamedots button .fa-icon {
+    font-size: 40px; /* Adjust the icon size as needed */
+    vertical-align: middle;
+  }
+  
+  /* Clearfix for the parent container */
+  .gamedots::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  .gameboard {
+    margin-top: 15%;
+   
+  }
+
+  .dices {
+    display: flex;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 40%;
+  }
+
+  .scoreboard {
+    transform: skewX(-15deg);
+  }
+
+  .year-results{
+    display: inline;
+    margin-right: 15px;
+  }
+  .alltime-results {
+    display: inline;
+  }

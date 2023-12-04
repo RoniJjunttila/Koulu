@@ -1,0 +1,110 @@
+
+.body {
+    margin: 0;
+    padding: 0;
+    height: 90vh; /* Use viewport height to make it cover the full page height */
+    overflow: hidden;
+}
+
+.angle-container {
+    display: flex;
+    height: 100vh; /* Make the container take the full viewport height */
+    position: relative;
+    overflow: hidden;
+}
+
+.yellow-side {
+    width: 50%;
+    height: 100%;
+    background-color: #9e046b;
+    background-image: -webkit-linear-gradient(50deg, #2e0020, #fa003670);
+    transform-origin: top; /* Skew from the top-left corner */
+    transform: skewX(15deg) scale(1.5); /* Skew and shift the element */
+}
+
+.blue-side {
+  box-shadow: -5px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    width: 50%;
+    height: 100%;
+    background-color:rgb(32, 32, 28);
+    transform-origin: top; /* Skew from the top-left corner */
+    transform: skewX(15deg) scale(1.2); /* Skew and shift the element */
+}
+
+  .code {
+    transform: skewX(-15deg);
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-size: small;
+    color: green;
+    font-weight: 600;
+    margin-left: 15px;
+  }
+
+
+  .window-edge {
+    padding-top: 5px;
+    margin-top: 15%;
+    margin-left: 20%;
+    margin-right: 35%;
+    transform: skewX(-15deg);     
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);  /* toisena */
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(105px);
+  }
+
+  .window-header {
+    margin-left: 10px;
+    color: rgba(255, 255, 255, 0.9);
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+  }
+  .idendifier {
+    color:rgba(150, 150, 150, 0.9)
+  }
+  .localhost-text {
+   align-items: flex-start;
+   display: flex;
+  } 
+
+  .window-control-buttons {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 6px;
+    padding-right: 7px;
+  } 
+
+  .icons {
+    font-size: x-small;
+  }
+
+  .body-screen { 
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-sizing: border-box;
+    padding: 20px;
+    overflow: scroll;
+    background-color:#282c34;
+    color:rgb(4, 211, 4);
+    font-size: x-large;
+  }
+
+  #hidden {
+    visibility: hidden;
+  }
+
+  @keyframes coding {
+    from {
+      width: 0
+    }
+  }
+ 
+  @keyframes valkytys {
+    50% {
+      border-color: transparent
+    }
+  }

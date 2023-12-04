@@ -1,0 +1,85 @@
+
+/*   body {
+      min-width: 200px;
+      background-color: #9e046b;
+      background-image: -webkit-linear-gradient(50deg, #2e0020, #fa003670);
+      min-height: 1910px;
+      overflow: hidden;
+      font-family: monospace;
+  }
+  
+  .App{
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2); 
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(105px);
+    margin-top: 40px;
+  }
+ */
+  header {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: rgb(255, 255, 255, 0);
+    font-size: small;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+  }
+  
+  .runko {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-sizing: border-box;
+    padding: 20px;
+    height: calc(100% - 40px);
+    overflow: scroll;
+    background-color: #000;
+    color:rgb(4, 211, 4);
+    font-size: small;
+  }
+  
+  .otsikko {
+    width: 570px;
+    animation: kirjotus 2s steps(30), valkytys .4s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-size: small;
+  }
+  
+  input {
+    background-color: transparent;
+    border: none;
+    color: rgb(4, 211, 4);
+  }
+  
+  select {
+    background-color: transparent;
+    border-color: rgb(4, 211, 4);
+    color: rgb(4, 211, 4);
+  }
+  option{
+   background-color: black;
+   border: 0;
+    
+  }
+  
+  button {
+    background-color: transparent;
+    color: rgb(4, 211, 4);
+    border-color: rgb(4, 211, 4);
+    padding: 5px;
+  }
+  
+  @keyframes kirjotus {
+    from {
+      width: 0
+    }
+  }
+      
+  @keyframes valkytys {
+    50% {
+      border-color: transparent
+    }
+  }
