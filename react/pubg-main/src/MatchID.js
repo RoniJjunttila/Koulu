@@ -1,176 +1,186 @@
+// CustomMap.js
 import React, { useEffect, useState } from "react";
+import { MapContainer, ImageOverlay, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
-const PUBG_API_KEY =
-  ""; 
+//character+ - location{x,y}- name, _D: "2023-12-19T18:39:58.770Z"
 
-const PlayerInfo = () => {
+const CustomMap = () => {
+  const PUBG_API_KEY =
+  "";
+const PUBG_API_KEY_2 =
+  "";
   const [playerData, setPlayerData] = useState(null);
   const [matchesArray, setMatchesArray] = useState([]);
   const [matchData, setMatchData] = useState(null);
   const [selectedGame, setSeletedGame] = useState(0);
   const [selectedPlayer, setSeletedPlayer] = useState(0);
-  const playerNames = ["E1_Duderino","MunatonEpaemies","HlGHLANDER","bold_moves_bob"];
+  const playerNames = [
+    "E1_Duderino",
+    "MunatonEpaemies",
+    "HlGHLANDER",
+    "bold_moves_bob",
+  ];
+  const mapNames = {
+    Baltic_Main: "Erangel",
+    Chimera_Main: "Paramo",
+    Desert_Main: "Miramar",
+    DihorOtok_Main: "Vikendi",
+    Erangel_Main: "Erangel",
+    Heaven_Main: "Haven",
+    Kiki_Main: "Deston",
+    Range_Main: "Camp Jackal",
+    Savage_Main: "Sanhok",
+    Summerland_Main: "Karakin",
+    Tiger_Main: "Taego",
+    Neon_Main: "Rondo",
+  };
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchPlayerData = async () => {
-      const playerResponse = await fetch(
-        `https://api.pubg.com/shards/steam/players?filter[playerNames]=${playerNames[selectedPlayer]}`,
-        {
-          headers: {
-            Authorization: `Bearer ${PUBG_API_KEY}`,
-            Accept: "application/vnd.api+json",
-          },
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        const playerResponse = await fetch(
+          `https://api.pubg.com/shards/steam/players?filter[playerNames]=${playerNames[selectedPlayer]}`,
+          {
+            headers: {
+              Authorization: `Bearer ${PUBG_API_KEY}`,
+              Accept: "application/vnd.api+json",
+            },
+          }
+        );
+
+        const matches = [];
+        const playerData = await playerResponse.json();
+        setPlayerData(playerData);
+
+        for (let i = 0; i < 19; i++) {
+          matches.push(playerData.data[0].relationships.matches.data[i].id);
         }
-      );
-      const matches = [];
-      const playerData = await playerResponse.json();
-      setPlayerData(playerData);
-      for (let i = 0; i < 19; i++) {
-        matches.push(playerData.data[0].relationships.matches.data[i].id);
+        setMatchesArray([...matches]);
+      } catch (error) {
+        console.error("Error fetching player data:", error);
+      } finally {
+        setLoading(false);
       }
-      setMatchesArray([...matches]);
     };
-  
-    fetchPlayerData();
+
+    fetchData();
   }, [selectedPlayer]);
-  
+
   useEffect(() => {
     const fetchMatchData = async () => {
-      if (matchesArray.length > 0) {
-        try {
+      try {
+        setLoading(true);
+
+        if (matchesArray.length > 0) {
+          const matchId = matchesArray[selectedGame];
+
           const matchResponse = await fetch(
-            `https://api.pubg.com/shards/steam/matches/${matchesArray[selectedGame]}`,
+            `https://api.pubg.com/shards/steam/matches/${matchId}`,
             {
               headers: {
-                Authorization: `Bearer ${PUBG_API_KEY}`,
+                Authorization: `Bearer ${PUBG_API_KEY_2}`,
                 Accept: "application/vnd.api+json",
               },
             }
           );
+
           const matchData = await matchResponse.json();
           setMatchData(matchData);
-        } catch (error) {
-          console.error("Error fetching match data:", error);
-          setMatchData(null); // Set matchData to null to indicate an error
+
+          matchData.included = matchData.included.filter(
+            (item) => item.type !== "roster"
+          );
+
+          const telemetryId = matchData.data.relationships.assets.data[0].id;
+          const telemetryURL = matchData.included.find(
+            (item) => item.type === "asset" && item.id === telemetryId
+          ).attributes.URL;
+          const telemetryResponse = await fetch(telemetryURL, {
+            headers: {
+              Accept: "application/vnd.api+json",
+              "Accept-Encoding": "gzip",
+            },
+          });
+//some((participant) => participant.type === "participant")
+          const telemetryData = await telemetryResponse.json();
+          const filteredCharacters = telemetryData
+          .filter(item => item.character) // Filter items where character exists
+          .map(item => item.character.location); // Map to extract the character object
+        
+        console.log(filteredCharacters);
+          const searchValue = "LogMatchStart";
+          const result = telemetryData.filter(
+            (item) => item._T === searchValue
+          );
         }
+      } catch (error) {
+        console.error("Error fetching match data:", error);
+      } finally {
+        setLoading(false);
       }
     };
-  
+
     fetchMatchData();
   }, [matchesArray, selectedGame]);
+
+  // Custom tile layer URL
+  const customTileLayerUrl = 'https://i.imgur.com/QZazUv6.jpg';
+
+
+  // Custom icon for the marker
+  const customIcon = new L.Icon({
+    iconUrl: '',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+  const customIcon2 = new L.Icon({
+    iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Color-blue.JPG',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+
+  // Horizontal boundaries for the map (X-axis)
+  const imageAspectRatio = 2000 / 2000; // replace with the actual aspect ratio of your image
+
+  // Calculate the width of the map based on the height and aspect ratio
+  const mapWidth = 800 * imageAspectRatio;
+  
+  // Coordinates for the marker (assuming (0,0) is at the top-left corner)
+  const markerPosition = [979632.25, 447521.59375];
+  const markerPosition2 = [0, 0];
+  //  979632.25 447521.59375
+  // Set bounds for the ImageOverlay
+  const mapBounds = [
+    [0, 0],                      // Top-left corner (min Y, min X)
+    [816000, 816000] // Bottom-right corner (max Y, max X)
+  ];
   
   return (
-    <div>
-      <div>
-      <label>Games:</label>
-      <select onChange={(event) => setSeletedGame(event.target.value)}>
-        {matchesArray.map((key, id) => (
-          <option key={id} value={id}>
-            Game {key}
-          </option>
-        ))}
-      </select>
-      </div>
-      <div>
-      <label>Player: </label>
-<select onChange={(event) => setSeletedPlayer(event.target.value)}>
-  {playerNames.map((key, id) => (
-    <option key={key} value={id}>
-      {key}
-    </option>
-  ))}
-</select>
-
-
-      </div>
-<div>
-  <button>Season data</button>
-</div>
+    <MapContainer center={markerPosition} zoom={10} style={{ height: '800px', width: `100%` }}>
+      {/* Add a single ImageOverlay with the custom image */}
+      <ImageOverlay
+        url={customTileLayerUrl}
+        bounds={mapBounds} // Set the bounds for the image
+      />
   
-      {matchData ? (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Kills</th>
-                <th>Assists</th>
-                <th>Dmg_Dealt</th>
-                <th>Rank</th>
-              </tr>
-            </thead>
-            <tbody>
-              {matchData.included &&
-                matchData.included
-                  .filter((participant) => participant.attributes.stats)
-                  .sort((a, b) => {
-                    const winPlaceA = a.attributes.stats.winPlace || 0;
-                    const winPlaceB = b.attributes.stats.winPlace || 0;
-                    return winPlaceA - winPlaceB;
-                  })
-                  .map((participant, index, participants) => {
-                    const stats = participant.attributes.stats || {};
-                    const { name, kills, assists, damageDealt, winPlace } = stats;
-                    const isFirstParticipant = index === 0;
-                    const prevWinPlace = isFirstParticipant
-                      ? null
-                      : participants[index - 1].attributes.stats.winPlace;
-                    const winPlaceChanged =
-                      !isFirstParticipant && winPlace !== prevWinPlace;
-                    return (
-                      <React.Fragment key={participant.id}>
-                        {winPlaceChanged && (
-                          <tr>
-                            <td>-------------------</td>
-                          </tr>
-                        )}
-                        <tr>
-                          {name === "E1_Duderino" ||
-                          name === "MunatonEpaemies" ||
-                          name === "HlGHLANDER" ||
-                          name === "bold_moves_bob" ? (
-                            <td style={{ fontWeight: "bold" }}>{name}</td>
-                          ) : (
-                            <td>{name}</td>
-                          )}
-                          <td>{kills}</td>
-                          <td>{assists}</td>
-                          <td>{damageDealt}</td>
-                          <td>{winPlace}</td>
-                        </tr>
-                      </React.Fragment>
-                    );
-                  })}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <p>Loading match data...</p>
-      )}
-    </div>
+      {/* Add the first marker with the custom icon */}
+      <Marker position={markerPosition} icon={customIcon}>
+        <Popup>A custom marker with a custom icon!</Popup>
+      </Marker>
+  
+      {/* Add the second marker at [0, 0] with the same custom icon */}
+      <Marker position={markerPosition2} icon={customIcon2}>
+        <Popup>Another marker at [0, 0]</Popup>
+      </Marker>
+    </MapContainer>
   );
 };
-export default PlayerInfo;
 
-/* return (
-  <div>
-    {matchData ? (
-      <div>
-        {matchData.included
-          .filter(participant => participant.attributes.stats)
-          .filter(participant => ['E1_Duderino', 'HlGHLANDER','MunatonEpaemies','boldmovesbobo'].includes(participant.attributes.stats.name))
-          .map(participant => {
-            const stats = participant.attributes.stats || {};
-            const { playerId, ...statsWithoutPlayerId } = stats;
-
-            return (
-              <pre key={participant.id}>{JSON.stringify(statsWithoutPlayerId, null, 2)}</pre>
-            );
-          })}
-      </div>
-    ) : (
-      <p>Loading match data...</p>
-    )}
-  </div>
-);
-}       */
+export default CustomMap;
