@@ -1,0 +1,112 @@
+/* Assuming there is a parent container for MessageList */
+.parent-container {
+    height: 100%; /* or any other height you want */
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column-reverse; /* Reverse the direction */
+  }
+  
+  li {
+    list-style-type: none;
+    margin-bottom: 10px;
+    border-bottom: 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    order: 1; /* Default order to ensure the newest message is at the bottom */
+  }
+    
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  strong {
+    font-size: 1.1em;
+  }
+  
+  span {
+    font-size: 1em;
+    margin-right: 70px; /* Adjust as needed */
+    color: white
+  }
+  p {
+    color: white
+  }
+  
+  /* Additional styles for the modal */
+  .custom-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    width: 85%;
+    border-radius: 14px;
+  }
+  
+
+   @keyframes move {
+    0% {
+      transform: translateX(-150%);
+    }
+    100% {
+      transform: translateX(5200%);
+    }
+  }
+  
+  @keyframes roll {
+    0% {
+      transform: translateY(-50%) rotate(0deg);
+    }
+    25% {
+      transform: translateY(50%) rotate(360deg);
+    }
+    50% {
+      transform: translateY(-50%) rotate(720deg);
+    }
+    75% {
+      transform: translateY(50%) rotate(1080deg);
+    }
+    100% {
+      transform: translateY(-50%) rotate(1440deg);
+    }
+  } 
+  
+  .move {
+    font-size: 32px;
+    display: inline-block;
+    white-space: nowrap;
+    animation: move 10s linear forwards infinite;/*  infinite */
+  }
+  
+  .roll {
+    font-size: 32px;
+    display: inline-block;
+    white-space: nowrap;
+    animation: roll 10s linear infinite; /* infinite */
+  }
+  
+  .emptyText {
+
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  .inline-container {
+    display: flex;
+    align-items: center;
+  }

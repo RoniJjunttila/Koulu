@@ -1,0 +1,41 @@
+.input-container {
+  position: fixed;
+  bottom: 0;
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end; /* Align items to the bottom */
+  justify-content: center; /* Center the items horizontally */
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  padding: 5px;
+  width: 50%;
+  margin-bottom: 15px;
+}
+
+/* Add styles for the input field */
+.rounded-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 25px;
+}
+
+/* Add styles for the button */
+.send-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 15px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.fa-circle-dot {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 34px; /* Adjust the size as needed */
+  color: #fff; /* Set the color as needed */
+}

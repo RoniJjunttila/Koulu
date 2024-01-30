@@ -1,0 +1,141 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.server-icon-container {
+  position: relative;
+  display: inline-block; /* Ensures the icons are displayed in a line */
+}
+
+.server-icon {
+  font-size: 54px; /* Adjust the size as needed */
+  color: #000; /* Set the color as needed */
+}
+
+.server-icons {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px; /* Adjust the size as needed */
+  color: #fff; /* Set the color as needed */
+}
+
+.add-server-icon{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px; /* Adjust the size as needed */
+  color: green; /* Set the color as needed */
+}
+
+body{
+  overflow: hidden;
+  background: rgba(40,40,40,1);
+}
+
+.container-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: rgba(50, 50, 50, 0.2);
+  min-height: 100vh;
+
+  margin: 0;
+}
+
+.app-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(5, 5, 5, 0.5);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Adjust the opacity value as needed */
+  z-index: 2;
+}
+
+
+.app-name {
+  font-size: large;
+  margin-left: 10px;
+}
+
+.centered-app-header {
+  width: 100%;
+  text-align: center;
+  font-size: large;
+}
+
+.all-icons{
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.server-list{
+
+  height: 100vh;
+  max-height: 100vh;
+  background: rgba(10, 10, 10, 0.5);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Adjust the opacity value as needed */
+  margin-top: 60px;
+  position: absolute;
+  display: flex;
+  align-items: start;
+  max-width: 20%;
+  width: 5%;
+  flex-shrink: 0; /* This prevents the server-list from shrinking */
+}
+
+.user-info {
+  position: relative;
+  margin-top: 40px;
+  z-index: 0;
+  background: rgba(10, 10, 10, 0.5);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  width: 120%;
+  flex-shrink: 0;
+  margin-right: 90px;
+}
+
+.user {
+  text-align: center;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+}
+
+.users {
+  text-align: center;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+}
+
+.bottomContainer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(10, 10, 10, 0.5);
+  padding: 10px;
+  margin-bottom: 50px;
+}
+
+.server-list p,div,span,button {
+  margin: 0; /* Remove margin for p elements inside .server-list */
+}
